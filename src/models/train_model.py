@@ -1,22 +1,34 @@
 from torch import nn
 
 import torch.nn.functional as F
+from torchvision import models 
 
 class Classifier(nn.Module):
     def __init__(self):
         super(Classifier, self).__init__()
-        self.conv1 = nn.Conv2d(1, 10, kernel_size=5)
-        self.conv2 = nn.Conv2d(10, 20, kernel_size=5)
-        self.conv2_drop = nn.Dropout2d()
-        self.fc1 = nn.Linear(320, 50)
-        self.fc2 = nn.Linear(50, 10)
+
+        # Pre-trained model ResNet18
+        self.model_conv = models.resnet18(pretrained=True)
+
+        # freeze the gradients
+        for param in self.model_conv.parameters():
+            param.requires_grad = False
+
+        # TODO MAKE THE CORRECT INPUT SHAPE! 
+        self.fc1 = nn.Linear(320, 50)    # input should be: out_channels times image size times image size 
+        self.fc2 = nn.Linear(50, 2)
+
+        # Add dropout
+        self.dropout = nn.Dropout(0.25)
 
     def forward(self, x):
-        x = F.relu(F.max_pool2d(self.conv1(x), 2))
-        x = F.relu(F.max_pool2d(self.conv2_drop(self.conv2(x)), 2))
+        x = F.relu(self.model_conv(x))
+
+        print(x.shape)
+
         x = x.view(-1, 320)
         x = F.relu(self.fc1(x))
-        x = F.dropout(x, training = self.training)
+        x = self.dropout(x)
         x = F.relu(self.fc2(x))
         return F.log_softmax(x)
 
@@ -30,23 +42,24 @@ def train(self):
         wandb.init(config=args)
         
 
-        # TODO: Implement training loop here
-        model = MyAwesomeModel()
+        # TODO: Implement training loop here 
+
+        model = Classifier()
+
+        # Visualization
         wandb.watch(model, log_freq=100)
-        train_set, _ = mnist()
-        trainloader = torch.utils.data.DataLoader(train_set, batch_size=64, shuffle=True)
-            # negative log likelihood
+
+        #train_set, _ = ???
+        #trainloader = torch.utils.data.DataLoader(train_set, batch_size=64, shuffle=True)
+
+        # negative log likelihood because of the log_softmax
         criterion = nn.NLLLoss()
 
         # stochastic gradient descent --> adaptive SGD instead 
         optimizer = optim.Adam(model.parameters(), lr=0.003)
 
         epochs = 10
-
-        epoch = []
-        training_loss = []
         
-
         for e in range(epochs):
             running_loss = 0
             for images, labels in trainloader:
@@ -72,17 +85,10 @@ def train(self):
                 # Find the epoch and corresponding training loss for plotting
                 wandb.log({"loss": running_loss/len(trainloader)})
                 wandb.log({"batch images for epoch "+str(e) : [wandb.Image(i) for i in images]})
-                epoch.append(e)
-                training_loss.append(running_loss/len(trainloader))
                 
                 print(f"Training loss: {running_loss/len(trainloader)}")
-        print("Our model: \n\n", model, '\n')
-        print("The state dict keys: \n\n", model.state_dict().keys())
-        torch.save(model.state_dict(), 'checkpoint.pth')
-
-
-        plt.plot(epoch, training_loss)
-        plt.show()
+                
+        torch.save(model.state_dict(), 'ResNet18.pth')
 
 def evaluate(self):
         print("Evaluating until hitting the ceiling")
@@ -94,12 +100,14 @@ def evaluate(self):
         
         # TODO: Implement evaluation logic here
         if args.load_model_from:
-            checkpoint = torch.load('checkpoint.pth')
+            checkpoint = torch.load('ResNet18.pth')
         _, test_set = mnist()
-        model = MyAwesomeModel()
+        model = Classifier()
         model.load_state_dict(checkpoint)
 
-        testloader = torch.utils.data.DataLoader(test_set, batch_size=64, shuffle=True)
+        # TODO load the test data
+        #testloader = torch.utils.data.DataLoader(test_set, batch_size=64, shuffle=True)
+
         running_accuracy = []
         with torch.no_grad():
             # set model to evaluation mode

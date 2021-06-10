@@ -23,6 +23,8 @@ The data set used for the project is called [Brain MRI Images for Brain Tumor De
 We are going to use a pre-trained network (transfer learning) as backbone for our convolutionalneural network.  This is to further increase efficiency of our training as data sample size is alreadysparse.  Furthermore, the pre-trained network will be chosen from the already supported modelsin pytorch, example:  ResNet.  Most of pytorch’s pre-trained models takes RGB images of a certainsize eg.  224×224 for ResNet, we therefore need to keep this in mind when choosing pre-trainedmodels.
 
 ![](/reports/figures/data-example.png)
+ Figure a shows a MRI scan image of a brain with a tumor, belonging to category ”Yes”.  b: A MRI scan image of a brain with a tumor, belonging to category ”No”.
+
 
 Repo for the final project for MLOps course at DTU
 

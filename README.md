@@ -1,6 +1,31 @@
 mlops_finalproject
 ==============================
 
+# MLOps Project Description 
+Ewa - s203262, Stefan - s173991, Magnus - s164415, Selma - s163740 
+
+*Date: 10.06.21*
+
+## Overall goal
+
+The goal of the project is to use an open-source framework to apply computer vision algorithmson brain tumor data and use a pre-trained model to classify the images.
+
+## Framework
+
+We plan to use the Kornia framework for the project. We will use the data augmentation feature toincrease the sample size of our data. Additionally, we consider using the functionality of sharpeningthe  images  to  improve  the  quality  of  existing  data  with  the  intention  of  making  features  moredistinct.
+
+## Data 
+
+The data set used for the project is called [Brain MRI Images for Brain Tumor Detection](https://www.kaggle.com/navoneel/brain-mri-images-for-brain-tumor-detection?fbclid=IwAR1E8c2ZIR4g4ePLUku6PWjESgeHClsqTXmWqPZSA4ut2DLleNBH6GbiwYw) and is found on Kaggle.  It is a binary classification problem where we need to classify whether a braincontains a tumor or not.  It consists of 253 brain MRI scan images, where 98 of the brain scansbelongs to the class ”No” and the remaining 155 images belongs to the class ”Yes”.  The imagesvaries in size with some of the largest ones being 1024×1024 and 1920×1080 compared to thesmallest images being 201×251 and 300×168.
+
+## Models
+
+We are going to use a pre-trained network (transfer learning) as backbone for our convolutionalneural network.  This is to further increase efficiency of our training as data sample size is alreadysparse.  Furthermore, the pre-trained network will be chosen from the already supported modelsin pytorch, example:  ResNet.  Most of pytorch’s pre-trained models takes RGB images of a certainsize eg.  224×224 for ResNet, we therefore need to keep this in mind when choosing pre-trainedmodels.
+
+![](/reports/figures/data-example.png)
+ Figure a shows a MRI scan image of a brain with a tumor, belonging to category ”Yes”.  b: A MRI scan image of a healthy brain, belonging to category ”No”.
+
+
 Repo for the final project for MLOps course at DTU
 
 Project Organization

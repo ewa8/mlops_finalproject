@@ -1,3 +1,7 @@
+# Self-added
+brain_tumor_dataset/
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -7,6 +11,7 @@ __pycache__/
 
 # Distribution / packaging
 .Python
+venv/
 env/
 build/
 develop-eggs/
@@ -87,3 +92,4 @@ target/
 
 # Mypy cache
 .mypy_cache/
+

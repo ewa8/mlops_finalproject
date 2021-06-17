@@ -49,7 +49,6 @@ Repo for the final project for MLOps course at DTU
 - [ ] Checked how robust your model is towards data drifting
 - [ ] Deployed your model locally using TorchServe
 
-### Week 3
 
 Project Organization
 ------------

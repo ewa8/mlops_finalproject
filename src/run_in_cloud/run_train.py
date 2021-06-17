@@ -13,6 +13,7 @@ def main():
     args = parser.parse_args(sys.argv[1:])
 
     if args.compute:
+        #requires a config.json file in the same directory
         ws = Workspace.from_config()
 
         cluster = ws.compute_targets[args.compute]

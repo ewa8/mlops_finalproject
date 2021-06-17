@@ -7,6 +7,7 @@ from dotenv import find_dotenv, load_dotenv
 import os
 import sys
 import argparse
+import pytest
 
 from os import path
 from PIL import Image
@@ -21,6 +22,8 @@ def main():
     """ Runs data processing scripts to turn raw data from (../raw) into
         cleaned data ready to be analyzed (saved in ../processed).
     """
+
+    assert True
     logger = logging.getLogger(__name__)
     logger.info('making final data set from raw data')
 
@@ -87,6 +90,8 @@ if __name__ == '__main__':
                 os.makedirs('brain_tumor_dataset/processed')
             if not (path.exists('brain_tumor_dataset/intermediate')):
                 os.makedirs('brain_tumor_dataset/intermediate')
+                os.makedirs('brain_tumor_dataset/intermediate/yes')
+                os.makedirs('brain_tumor_dataset/intermediate/no')
             print("Directories created successfully!")
         except OSError as error:
             print("Directories can not be created")

@@ -9,6 +9,9 @@ from PIL import Image
 from torchvision import transforms
 import torch
 from sklearn.model_selection import train_test_split
+import numpy as np
+import matplotlib.pyplot as plt
+from torchvision.transforms.transforms import Resize
 
 @click.command()
 #@click.argument('input_filepath', type=click.Path(exists=True))
@@ -26,9 +29,8 @@ def main():
 
     preprocess = transforms.Compose(
         [
-            transforms.Resize((224, 224)),
             transforms.ToTensor(),
-            #transforms.Normalize((0.5,), (0.5,))
+            transforms.Resize((224, 224)),
         ]
     )
 
@@ -37,9 +39,8 @@ def main():
 
     for i, dir in enumerate(os.listdir('brain_tumor_dataset/raw/')):
         for filename in os.listdir(f'brain_tumor_dataset/raw/{dir}'):
-            g_image = Image.open(f'brain_tumor_dataset/raw/{dir}/{filename}').convert('L')
+            g_image = Image.open(f'brain_tumor_dataset/raw/{dir}/{filename}').convert('RGB')
             processed = preprocess(g_image).detach().numpy()
-
             data.append(processed)
             targets.append(i)
     

@@ -28,6 +28,29 @@ We are going to use a pre-trained network (transfer learning) as backbone for ou
 
 Repo for the final project for MLOps course at DTU
 
+### TODO
+
+- [x] Create a git repository
+- [x] Make sure that all team members have write access to the github repository
+- [x] Create a dedicated environment for you project to keep track of your packages
+- [x] Create the initial file structure using cookiecutter
+- [x] Fill out the `make_dataset.py` file such that it downloads whatever data you need and 
+- [x] Add a model file and a training script and get that running
+- [ ] When you have something that works somewhat, remember at some point to to some profiling and see if you can optimize your code
+- [ ] Remember to fill out the `requirements.txt` file with whatever dependencies that you are using
+- [ ] Write unit tests for some part of the codebase and calculate the 
+- [ ] Get some continues integration running on the github repository
+- [ ] use either tensorboard or wandb to log training progress and other important metrics/artifacts in your code
+- [ ] remember to comply with good coding practices while doing the project
+- [ ] Setup and used Azure to train your model
+- [ ] Played around with distributed data loading
+- [ ] (not curriculum) Reformated your code in the pytorch lightning format
+- [ ] Deployed your model using Azure
+- [ ] Checked how robust your model is towards data drifting
+- [ ] Deployed your model locally using TorchServe
+
+### Week 3
+
 Project Organization
 ------------
 

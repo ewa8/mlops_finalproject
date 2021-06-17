@@ -5,6 +5,10 @@ from pathlib import Path
 from dotenv import find_dotenv, load_dotenv
 # import kaggle
 import os
+import sys
+import argparse
+
+from os import path
 from PIL import Image
 from torchvision import transforms
 import torch
@@ -22,6 +26,7 @@ def main():
 
     # TODO: create method how to get raw data
     # TODO: make check to see if the folder structure is there
+    
     # TODO: use kornia to do image augmentation
 
     preprocess = transforms.Compose(
@@ -69,4 +74,21 @@ if __name__ == '__main__':
     # load up the .env entries as environment variables
     load_dotenv(find_dotenv())
 
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--init', action='store_true')
+    args = parser.parse_args()
+    init_value = args.init
+    
+    if init_value:
+        try:
+            if not (path.exists('brain_tumor_dataset/raw/')):
+                os.makedirs('brain_tumor_dataset/raw/')
+            if not (path.exists('brain_tumor_dataset/processed')):
+                os.makedirs('brain_tumor_dataset/processed')
+            if not (path.exists('brain_tumor_dataset/intermediate')):
+                os.makedirs('brain_tumor_dataset/intermediate')
+            print("Directories created successfully!")
+        except OSError as error:
+            print("Directories can not be created")
+    else:
+        main()

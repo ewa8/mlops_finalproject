@@ -35,7 +35,7 @@ Repo for the final project for MLOps course at DTU
 - [x] Create a dedicated environment for you project to keep track of your packages
 - [x] Create the initial file structure using cookiecutter
 - [x] Fill out the `make_dataset.py` file such that it downloads whatever data you need and 
-- [x] Add a model file and a training script and get that running
+- [ ] Add a model file and a training script and get that running
 - [ ] When you have something that works somewhat, remember at some point to to some profiling and see if you can optimize your code
 - [ ] Remember to fill out the `requirements.txt` file with whatever dependencies that you are using
 - [ ] Write unit tests for some part of the codebase and calculate the 

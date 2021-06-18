@@ -21,15 +21,16 @@ def train():
     print(args)
 
     if args.use_wandb:  # Use wandb logger
+        print('Using wandb...')
         kwargs = {'entity': 'sems'}
-        logger = WandbLogger(project='final_project', **kwargs)
+        chosen_logger = WandbLogger(project='final_project', **kwargs)
     else:  # Use default logger
-        logger = True
+        chosen_logger = True
     
     model = TumorClassifier()
     data = DataModule(train_data_dir='./brain_tumor_dataset/processed', batch_size=50)
     
-    trainer = pl.Trainer(logger=logger, max_epochs=3)
+    trainer = pl.Trainer(logger=chosen_logger, max_epochs=2, log_every_n_steps=2)
     trainer.fit(model, data)
     
 

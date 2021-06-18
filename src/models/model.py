@@ -1,5 +1,6 @@
-from torch import nn
 import torch
+from torch import nn
+from sklearn.metrics import accuracy_score
 import pytorch_lightning as pl
 from pytorch_lightning.loggers import WandbLogger
 
@@ -13,59 +14,51 @@ class TumorClassifier(pl.LightningModule):
 
         # Pre-trained model ResNet18
         self.model_conv = models.resnet18(pretrained=True)
-
+        self.model_conv.fc = nn.Identity()  # Use identity matrix at fc-layer, to get 512 neuron output
+                                            # Replaces the final layer to be an output layer
+        self.model_conv.eval()
+        
         # freeze the gradients
         for param in self.model_conv.parameters():
             param.requires_grad = False
         
-        # TODO MAKE THE CORRECT INPUT SHAPE! 
-        self.fc1 = nn.Linear(320, 50)  # input should be: out_channels times image size times image size 
-        self.fc2 = nn.Linear(50, 1)
+        self.fc1 = nn.Linear(512, 64)  # input should be: out_channels times image size times image size 
+        self.fc2 = nn.Linear(64, 1)
         
         # Add dropout
         self.dropout = nn.Dropout(0.25)
     
     
     def forward(self, x):
-        x = F.relu(self.model_conv(x))
-
-        print(x.shape)
-
-        x = x.view(-1, 320)
+        x = self.model_conv(x)
+       
         x = F.relu(self.fc1(x))
         x = self.dropout(x)
         x = F.relu(self.fc2(x))
         
-        return F.sigmoid(x)
+        return torch.sigmoid(x)
     
     
     def training_step(self, batch: torch.Tensor, batch_idx: int):
         images, labels = batch
-        p_labels = self(images)
+        p_labels = self(images).reshape(-1)  # reshape to get shape (50) instead of (50, 1)
         loss = F.binary_cross_entropy(p_labels, labels)
-        acc = (p_labels.max(1).indices == labels).float().mean()
-        #self.log({'train/loss': loss}, on_step=False, on_epoch=True)
-        #self.log({'train/acc': acc}, on_step=False, on_epoch=True)
-        print(loss)
-        return loss
-    
-    
-    def training_epoch_end(self, outputs):
-        print(outputs)
+        acc = (labels == torch.round(p_labels)).float().mean()
+        #self.logger.experiment.log({'train_loss': loss})
+        self.log('train_loss', loss)
+        self.log('train_acc', acc)
+        return loss    
     
     
     def validation_step(self, batch, batch_idx):
         images, labels = batch
         p_labels = self(images)
         loss = F.binary_cross_entropy(p_labels, labels)
-        acc = (p_labels.max(1).indices == labels).float().mean()
-        #self.log({'val/loss': loss})
-        #self.log({'val/acc': acc})
-        return loss
-    
-    def test_step(self):
         
-        return None
+        acc = (labels == torch.round(p_labels)).float().mean()
+        self.log('val_loss', loss)
+        self.log('val_acc', acc)
+        return loss
     
     
     def configure_optimizers(self):

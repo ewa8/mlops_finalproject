@@ -29,8 +29,9 @@ def main():
 
     preprocess = transforms.Compose(
         [
-            transforms.ToTensor(),
             transforms.Resize((224, 224)),
+            transforms.ToTensor(),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
         ]
     )
 
@@ -45,7 +46,7 @@ def main():
             targets.append(i)
     
     data    = torch.tensor(data)
-    targets = torch.tensor(targets)
+    targets = torch.tensor(targets).float()
 
     X_train, X_test, y_train, y_test = train_test_split(data, targets, 
                                                         test_size=0.2, 

@@ -55,7 +55,7 @@ def main():
         [
             transforms.Resize((224, 224)),
             #transforms.ToTensor(),
-            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+            #transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
         ]
     )
 
@@ -78,10 +78,13 @@ def main():
             gauss = K.filters.GaussianBlur2d((5, 5), (4, 4))
             blur = gauss(processed.float())
 
+            # Rotation
+
             # Make tensor to numpy before adding to lists
             # Add original image and argumented imges
             data.append(processed.detach().numpy())
             data.append(blur.detach().numpy())
+
             targets.append(i)
             targets.append(i)
 
@@ -91,10 +94,15 @@ def main():
             # Save to intermediate folder
             cv2.imwrite(os.path.join(path+dir , filename), img_original)
 
-            # split the name and extensionnof the file
-            filename, extension = findFileExtension(str(filename))
+            # split the name and extension of the file
+            # TODO make the fucking def findFileExtension work
+            file_split = filename.split(".")
+
+            extension = file_split[-1]
+            filename = file_split[0]
 
             cv2.imwrite(os.path.join(path+dir , filename+'_blur'+'.'+extension), img_blur)
+
     data    = torch.tensor(data)
     targets = torch.tensor(targets).float()
 

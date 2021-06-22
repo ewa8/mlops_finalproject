@@ -21,5 +21,3 @@ def test_main():
         print(">>> Development environment passes all tests!")
 
 
-if __name__ == '__main__':
-    test_main()

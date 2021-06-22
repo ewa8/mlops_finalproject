@@ -9,9 +9,6 @@ import sys
 
 from src.models.model import TumorClassifier
 
-
-## TODO: data can't be trained until 3 channels have been made
-
 def train():
     print('Training model')
     parser = argparse.ArgumentParser(description='Training arguments')
@@ -21,15 +18,16 @@ def train():
     print(args)
 
     if args.use_wandb:  # Use wandb logger
+        print('Using wandb...')
         kwargs = {'entity': 'sems'}
-        logger = WandbLogger(project='final_project', **kwargs)
+        chosen_logger = WandbLogger(project='final_project', **kwargs)
     else:  # Use default logger
-        logger = True
+        chosen_logger = True
     
     model = TumorClassifier()
     data = DataModule(train_data_dir='./brain_tumor_dataset/processed', batch_size=50)
     
-    trainer = pl.Trainer(logger=logger, max_epochs=3)
+    trainer = pl.Trainer(logger=chosen_logger, max_epochs=2, log_every_n_steps=2)
     trainer.fit(model, data)
     
 

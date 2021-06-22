@@ -14,6 +14,9 @@ from PIL import Image
 from torchvision import transforms
 import torch
 from sklearn.model_selection import train_test_split
+import numpy as np
+import matplotlib.pyplot as plt
+from torchvision.transforms.transforms import Resize
 
 # Kornia
 import kornia as K
@@ -36,14 +39,14 @@ def main():
 
     # TODO: create method how to get raw data
     # TODO: make check to see if the folder structure is there
-    
+
     # TODO: use kornia to do image augmentation
 
     preprocess = transforms.Compose(
         [
             transforms.Resize((224, 224)),
             #transforms.ToTensor(),
-            #transforms.Normalize((0.5,), (0.5,))
+            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
         ]
     )
 
@@ -70,7 +73,6 @@ def main():
             # Add original image and argumented imges
             data.append(processed.detach().numpy())
             data.append(blur.detach().numpy())
-
             targets.append(i)
             targets.append(i)
 
@@ -87,9 +89,9 @@ def main():
 
             # TODO if statement for different file formats
             cv2.imwrite(os.path.join(path+dir , filename+'_blur'+'.png'), img_blur)
-    
+
     data    = torch.tensor(data)
-    targets = torch.tensor(targets)
+    targets = torch.tensor(targets).float()
 
     X_train, X_test, y_train, y_test = train_test_split(data, targets, 
                                                         test_size=0.2, 
@@ -118,7 +120,7 @@ def main():
     axs[1].imshow(blur)
 
     plt.show()
-    ###  
+    ###
 
 if __name__ == '__main__':
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
@@ -135,7 +137,7 @@ if __name__ == '__main__':
     parser.add_argument('--init', action='store_true')
     args = parser.parse_args()
     init_value = args.init
-    
+
     if init_value:
         try:
             if not (path.exists('brain_tumor_dataset/raw/')):

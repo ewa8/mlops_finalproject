@@ -23,7 +23,7 @@ def main():
 
         # Ensure the required packages are installed (we need pip, scikit-learn and Azure ML defaults)
         packages = CondaDependencies.create(conda_packages=['pip'],
-                                            pip_packages=['azureml-defaults', 'torch', 'torchvision', 'pytorch-lightning'])
+                                            pip_packages=['azureml-defaults', 'torch', 'torchvision', 'pytorch-lightning', 'wandb', 'azureml-mlflow', 'mlflow'])
         pytorch_env.python.conda_dependencies = packages
 
         # Create a script config

@@ -25,6 +25,15 @@ import cv2
 #@click.argument('input_filepath', type=click.Path(exists=True))
 #@click.argument('output_filepath', type=click.Path())
 
+def findFileExtension(filename):
+
+    file_split = filename.split(".")
+
+    extension = file_split[-1]
+    filename = file_split[0]
+  
+    return filename, extension
+
 def main():
     """ Runs data processing scripts to turn raw data from (../raw) into
         cleaned data ready to be analyzed (saved in ../processed).
@@ -79,14 +88,11 @@ def main():
 
             # Save to intermediate folder
             cv2.imwrite(os.path.join(path+dir , filename), img_original)
-            filename = filename.replace('.png', '')
-            filename = filename.replace('.PNG', '')
-            filename = filename.replace('.jpg', '')
-            filename = filename.replace('.JPG', '')
-            filename = filename.replace('.jpeg', '')
 
-            # TODO if statement for different file formats
-            cv2.imwrite(os.path.join(path+dir , filename+'_blur'+'.png'), img_blur)
+            # split the name and extensionnof the file
+            filename, extension = findFileExtension(str(filename))      
+
+            cv2.imwrite(os.path.join(path+dir , filename+'_blur'+'.'+extension), img_blur)
     
     data    = torch.tensor(data)
     targets = torch.tensor(targets)

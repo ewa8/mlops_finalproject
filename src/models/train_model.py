@@ -25,10 +25,10 @@ def train():
         chosen_logger = True
     
     model = TumorClassifier()
-    data = DataModule(train_data_dir='./brain_tumor_dataset/processed', batch_size=50)
+    data = DataModule(data_dir='./brain_tumor_dataset/processed', batch_size=24)
     
-    trainer = pl.Trainer(logger=chosen_logger, max_epochs=2, log_every_n_steps=2)
-    trainer.fit(model, data)
+    trainer = pl.Trainer(logger=chosen_logger, max_epochs=10, log_every_n_steps=2)
+    trainer.fit(model, datamodule=data)
     
 
 # def evaluate():

@@ -49,6 +49,9 @@ Repo for the final project for MLOps course at DTU
 - [ ] Deployed your model using Azure
 - [ ] Checked how robust your model is towards data drifting
 - [ ] Deployed your model locally using TorchServe
+- [ ] Used Optuna to run hyperparameter optimization on your model
+- [ ] Wrote one or multiple configurations files for your experiments
+- [ ] Used Hydra to load the configurations and manage your hyperparameters
 
 
 Project Organization

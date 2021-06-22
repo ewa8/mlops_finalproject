@@ -1,6 +1,8 @@
 import torch
 import pytorch_lightning as pl
 from pytorch_lightning.loggers import WandbLogger
+from azureml.core import Run
+from pytorch_lightning.loggers import MLFlowLogger
 
 from src.data.data_module import DataModule
 
@@ -17,6 +19,12 @@ def train():
     args = parser.parse_args(sys.argv[1:])
     print(args)
 
+    run =  Run.get_context()
+    mlflow_url = run.experiment.workspace.get_mlflow_tracking_uri()
+
+    mlf_logger = MLFlowLogger(experiment_name=run.experiment.name, tracking_uri=mlflow_url)
+    mlf_logger._run_id = run.id
+
     if args.use_wandb:  # Use wandb logger
         print('Using wandb...')
         kwargs = {'entity': 'sems'}
@@ -27,7 +35,7 @@ def train():
     model = TumorClassifier()
     data = DataModule(train_data_dir='./brain_tumor_dataset/processed', batch_size=50)
     
-    trainer = pl.Trainer(logger=chosen_logger, max_epochs=2, log_every_n_steps=2)
+    trainer = pl.Trainer(logger=[chosen_logger, mlf_logger], max_epochs=2, log_every_n_steps=2)
     trainer.fit(model, data)
     
 

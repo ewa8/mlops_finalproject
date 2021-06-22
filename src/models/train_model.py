@@ -9,9 +9,6 @@ import sys
 
 from src.models.model import TumorClassifier
 
-
-## TODO: data can't be trained until 3 channels have been made
-
 def train():
     print('Training model')
     parser = argparse.ArgumentParser(description='Training arguments')

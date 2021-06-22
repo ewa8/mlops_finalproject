@@ -44,7 +44,6 @@ class TumorClassifier(pl.LightningModule):
         p_labels = self(images).reshape(-1)  # reshape to get shape (50) instead of (50, 1)
         loss = F.binary_cross_entropy(p_labels, labels)
         acc = (labels == torch.round(p_labels)).float().mean()
-        #self.logger.experiment.log({'train_loss': loss})
         self.log('train_loss', loss)
         self.log('train_acc', acc)
         return loss    

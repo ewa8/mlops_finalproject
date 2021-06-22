@@ -9,7 +9,7 @@ from torchvision import models
 
 
 class TumorClassifier(pl.LightningModule):
-    def __init__(self):
+    def __init__(self, dropout: float=0.25, output_dim: int=64):
         super(TumorClassifier, self).__init__()
 
         # Pre-trained model ResNet18
@@ -22,11 +22,11 @@ class TumorClassifier(pl.LightningModule):
         for param in self.model_conv.parameters():
             param.requires_grad = False
         
-        self.fc1 = nn.Linear(512, 64)  # input should be: out_channels times image size times image size 
-        self.fc2 = nn.Linear(64, 1)
+        self.fc1 = nn.Linear(512, output_dim)  # input should be: out_channels times image size times image size 
+        self.fc2 = nn.Linear(output_dim, 1)
         
         # Add dropout
-        self.dropout = nn.Dropout(0.25)
+        self.dropout = nn.Dropout(dropout)
     
     
     def forward(self, x):
@@ -51,9 +51,8 @@ class TumorClassifier(pl.LightningModule):
     
     def validation_step(self, batch, batch_idx):
         images, labels = batch
-        p_labels = self(images)
+        p_labels = self(images).reshape(-1)
         loss = F.binary_cross_entropy(p_labels, labels)
-        
         acc = (labels == torch.round(p_labels)).float().mean()
         self.log('val_loss', loss)
         self.log('val_acc', acc)

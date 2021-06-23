@@ -4,7 +4,7 @@ from pytorch_lightning.loggers import WandbLogger
 from azureml.core import Run
 from pytorch_lightning.loggers import MLFlowLogger
 
-from src.data.data_module import DataModule
+# from src.data.data_module import DataModule
 
 import argparse
 import sys

@@ -1,0 +1,4 @@
+batch_size: 23
+dropout: 0.2852319202280339
+output_dim: 115
+seed: 15

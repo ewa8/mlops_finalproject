@@ -11,19 +11,24 @@ import sys
 import optuna
 from optuna.integration import PyTorchLightningPruningCallback
 
+print(torch.cuda.is_available())
+
 def objective(trial):
-    
+
     # Hyperparameters that is optimized
     batch_size = trial.suggest_int('batch_size', 12, 64)
     dropout    = trial.suggest_float('dropout', 0.2, 0.5)
     output_dim = trial.suggest_int('output_dim', 12, 128)
+    seed       = trial.suggest_int('seed', 0, 100)
     
+    torch.manual_seed(seed)
+
     model = TumorClassifier(dropout=dropout, output_dim=output_dim)
     data  = DataModule(data_dir='../../brain_tumor_dataset/processed', batch_size=batch_size)
     
     trainer = pl.Trainer(
         logger=True,
-        max_epochs=5,
+        max_epochs=15,
         # log_every_n_steps=2,
         callbacks=[PyTorchLightningPruningCallback(trial, monitor='val_acc')],
         gpus=1 if torch.cuda.is_available() else 0,
@@ -41,9 +46,6 @@ def objective(trial):
     return trainer.callback_metrics['val_acc'].item()
 
 if __name__ == '__main__':
-    
-    seed = 42
-    torch.manual_seed(seed)
     
     print('Finding optimal hyperparameters using Optuna...')
     parser = argparse.ArgumentParser(description='Optuna arguments')

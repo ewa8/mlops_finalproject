@@ -5,6 +5,7 @@ from azureml.core import Model
 from azureml.core.conda_dependencies import CondaDependencies
 from azureml.widgets import RunDetails
 import argparse
+import sys
 
 
 def main():
@@ -22,9 +23,12 @@ def main():
         pytorch_env = Environment("pytorch-env")
 
         # Ensure the required packages are installed (we need pip, scikit-learn and Azure ML defaults)
-        packages = CondaDependencies.create(conda_packages=['pip'],
-                                            pip_packages=['azureml-defaults', 'torch', 'torchvision', 'pytorch-lightning', 'wandb', 'azureml-mlflow', 'mlflow'])
-        pytorch_env.python.conda_dependencies = packages
+        # packages = CondaDependencies.create(conda_packages=['pip'],
+        #                                     pip_packages=['azureml-defaults', 'torch', 'torchvision', 'pytorch-lightning', 'wandb', 'azureml-mlflow', 'mlflow'])
+        # pytorch_env.python.conda_dependencies = packages
+
+        pytorch_env = Environment.from_pip_requirements(name = "pytorch-env",
+                                                file_path = "../../azure-requirements.txt")
 
         # Create a script config
         training_folder = '../models/'

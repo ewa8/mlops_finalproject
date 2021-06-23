@@ -18,19 +18,19 @@ def main():
         cluster = ws.compute_targets[args.compute]
 
         # Create a Python environment for the experiment
-        pytorch_env = Environment("pytorch-env")
+        # pytorch_env = Environment("pytorch-env")
 
         # Ensure the required packages are installed (we need pip, scikit-learn and Azure ML defaults)
 
-        pytorch_env = Environment.from_pip_requirements(name = "pytorch-env",
-                                                file_path = "././azure-requirements.txt")
+        pytorch_env = Environment.from_pip_requirements(name="pytorch-env",
+                                                file_path="azure-requirements.txt")
 
         # Create a script config
         training_folder = ''
         script_config = ScriptRunConfig(source_directory=training_folder,
-                                        script='./src/models/train_model.py',
+                                        script='src/models/train_model.py',
                                         environment=pytorch_env, 
-                                        compute_target=cluster) 
+                                        compute_target=cluster)
 
         # submit the experiment
         experiment_name = 'training_experiment'

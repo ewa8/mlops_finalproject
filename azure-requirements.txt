@@ -1,5 +1,5 @@
 azureml-sdk
--e git+https://github.com/ewa8/mlops_finalproject.git@main#egg=src
+-e git+https://github.com/ewa8/mlops_finalproject.git@fb838cb8c9294dd34b1c5435e17cd3118fa0c3a3#egg=src
 torch
 torchvision
 pytorch-lightning

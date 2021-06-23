@@ -12,6 +12,8 @@ import sys
 from src.models.model import TumorClassifier
 
 def train():
+    os.system("python ../data/make_dataset.py --init")
+    os.system("python ../data/make_dataset.py")
     print('Training model')
     parser = argparse.ArgumentParser(description='Training arguments')
     parser.add_argument('--use_wandb', default=False)

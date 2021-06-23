@@ -1,4 +1,4 @@
-import scr.data.make_dataset as md
+import src.data.make_dataset as md
 
 def test_divideFilename():
 
@@ -9,3 +9,4 @@ def test_divideFilename():
     assert f =='yes 56'
     assert e =='jpg'
     
+

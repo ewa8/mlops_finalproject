@@ -33,7 +33,7 @@ def train():
         chosen_logger = True
     
     model = TumorClassifier()
-    data = DataModule(data_dir='./brain_tumor_dataset/processed', batch_size=24)
+    data = DataModule(data_dir='../../brain_tumor_dataset/processed', batch_size=24)
     
     trainer = pl.Trainer(
         logger=chosen_logger, 

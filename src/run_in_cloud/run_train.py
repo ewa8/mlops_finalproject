@@ -23,12 +23,12 @@ def main():
         # Ensure the required packages are installed (we need pip, scikit-learn and Azure ML defaults)
 
         pytorch_env = Environment.from_pip_requirements(name = "pytorch-env",
-                                                file_path = "././azure-requirements.txt")
+                                                file_path = "../../azure-requirements.txt")
 
         # Create a script config
         training_folder = ''
         script_config = ScriptRunConfig(source_directory=training_folder,
-                                        script='./src/models/train_model.py',
+                                        script='../models/train_model.py',
                                         environment=pytorch_env, 
                                         compute_target=cluster) 
 

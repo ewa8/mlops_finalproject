@@ -1,7 +1,10 @@
 import torch
 import argparse, sys
 import os
+
+from torchvision.models.resnet import ResNet
 from src.models.model import TumorClassifier
+from torchvision.models import resnet18
 
 def model_to_torchserve():
     """

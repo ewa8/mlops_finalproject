@@ -25,7 +25,8 @@ def objective(trial):
         logger=True,
         max_epochs=5,
         # log_every_n_steps=2,
-        callbacks=[PyTorchLightningPruningCallback(trial, monitor='val_acc')]
+        callbacks=[PyTorchLightningPruningCallback(trial, monitor='val_acc')],
+        gpus=1 if torch.cuda.is_available() else 0,
         )
     
     hparams = {  # hyperparameters

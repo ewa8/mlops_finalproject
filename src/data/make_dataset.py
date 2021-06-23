@@ -98,9 +98,9 @@ def main():
 
             # Make tensor to numpy before adding to lists
             # Add original image and argumented imges
-            data.append(processed.detach().numpy())
-            data.append(blur.detach().numpy())
-            data.append(rotate.detach().numpy())
+            data.append(processed.reshape((3, 224, 224)).detach().numpy())
+            data.append(blur.reshape((3, 224, 224)).detach().numpy())
+            data.append(rotate.reshape((3, 224, 224)).detach().numpy())
 
             targets.append(i)
             targets.append(i)
@@ -127,7 +127,7 @@ def main():
 
     
     data    = torch.tensor(data)
-    targets = torch.tensor(targets)
+    targets = torch.tensor(targets).float()
 
     X_train, X_test, y_train, y_test = train_test_split(data, targets, 
                                                         test_size=0.2, 

@@ -35,21 +35,21 @@ Repo for the final project for MLOps course at DTU
 - [x] Create a dedicated environment for you project to keep track of your packages
 - [x] Create the initial file structure using cookiecutter
 - [x] Fill out the `make_dataset.py` file such that it downloads whatever data you need and 
-- [ ] Use Kornia
-- [ ] Add a model file and a training script and get that running
+- [x] Use Kornia
+- [x] Add a model file and a training script and get that running
 - [ ] When you have something that works somewhat, remember at some point to to some profiling and see if you can optimize your code
 - [ ] Remember to fill out the `requirements.txt` file with whatever dependencies that you are using
-- [ ] Write unit tests for some part of the codebase and calculate the 
-- [ ] Get some continues integration running on the github repository
-- [ ] use either tensorboard or wandb to log training progress and other important metrics/artifacts in your code
+- [x] Write unit tests for some part of the codebase and calculate the 
+- [x] Get some continues integration running on the github repository
+- [x] use either tensorboard or wandb to log training progress and other important metrics/artifacts in your code
 - [ ] remember to comply with good coding practices while doing the project
 - [ ] Setup and used Azure to train your model
 - [ ] Played around with distributed data loading
-- [ ] (not curriculum) Reformated your code in the pytorch lightning format
+- [x] (not curriculum) Reformated your code in the pytorch lightning format
 - [ ] Deployed your model using Azure
 - [ ] Checked how robust your model is towards data drifting
 - [ ] Deployed your model locally using TorchServe
-- [ ] Used Optuna to run hyperparameter optimization on your model
+- [x] Used Optuna to run hyperparameter optimization on your model
 - [ ] Wrote one or multiple configurations files for your experiments
 - [ ] Used Hydra to load the configurations and manage your hyperparameters
 

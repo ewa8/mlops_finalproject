@@ -34,5 +34,5 @@ class DataModule(pl.LightningDataModule):
         return DataLoader(self.test_data, batch_size=self.batch_size, shuffle=True)
 
 
-DataModule(data_dir='./brain_tumor_dataset/processed', batch_size=24)
+DataModule(data_dir='../../brain_tumor_dataset/processed', batch_size=24)
 

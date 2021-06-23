@@ -4,7 +4,7 @@ import pytorch_lightning as pl
 
 class DataModule(pl.LightningDataModule):
 
-    def __init__(self, data_dir: str = '', batch_size: int = 100):
+    def __init__(self, data_dir: str = '../../brain_tumor_dataset/processed', batch_size: int = 100):
         super().__init__()
         self.train_data = torch.load(f'{data_dir}/train.pt')
         self.test_data = torch.load(f'{data_dir}/test.pt')

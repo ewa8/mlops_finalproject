@@ -2,7 +2,7 @@ name: "Run tests"
 
 on:
   push:
-    branches: [ main, Magnus ]
+    branches: [ main, Magnus, ci-tests ]
   pull_request:
     branches: [ main ]
 

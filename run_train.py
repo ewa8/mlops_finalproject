@@ -24,16 +24,19 @@ def main():
 
         pytorch_env = Environment.from_pip_requirements(name="pytorch-env",
                                                 file_path="azure-requirements.txt")
+        # # Create a Python environment for the experiment
+        pytorch_env = Environment.from_pip_requirements(name = "pytorch-env2",
+                                                file_path = "../../azure-requirements.txt")
 
         # Create a script config
-        training_folder = ''
+        training_folder = '../../'
         script_config = ScriptRunConfig(source_directory=training_folder,
                                         script='src/models/train_model.py',
                                         environment=pytorch_env, 
                                         compute_target=cluster)
 
         # submit the experiment
-        experiment_name = 'training_experiment'
+        experiment_name = 'training_experiment2'
         experiment = Experiment(workspace=ws, name=experiment_name)
         run = experiment.submit(config=script_config)
         # RunDetails(run).show()

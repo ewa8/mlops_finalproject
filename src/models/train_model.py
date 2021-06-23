@@ -31,13 +31,13 @@ def train():
         chosen_logger = WandbLogger(project='final_project', **kwargs)
     else:  # Use default logger
         chosen_logger = True
-    
+
     model = TumorClassifier()
     data = DataModule(data_dir='brain_tumor_dataset/processed', batch_size=24)
-    
+
     trainer = pl.Trainer(
-        logger=chosen_logger, 
-        max_epochs=10, 
+        logger=chosen_logger,
+        max_epochs=10,
         log_every_n_steps=2,
         gpus=1 if torch.cuda.is_available() else 0,
         )

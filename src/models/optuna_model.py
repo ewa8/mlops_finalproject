@@ -19,7 +19,7 @@ def objective(trial):
     output_dim = trial.suggest_int('output_dim', 12, 128)
     
     model = TumorClassifier(dropout=dropout, output_dim=output_dim)
-    data  = DataModule(data_dir='./brain_tumor_dataset/processed', batch_size=batch_size)
+    data  = DataModule(data_dir='../../brain_tumor_dataset/processed', batch_size=batch_size)
     
     trainer = pl.Trainer(
         logger=True,

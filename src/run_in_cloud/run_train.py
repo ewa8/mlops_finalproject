@@ -23,12 +23,12 @@ def main():
         # Ensure the required packages are installed (we need pip, scikit-learn and Azure ML defaults)
 
         pytorch_env = Environment.from_pip_requirements(name = "pytorch-env",
-                                                file_path = "../../azure-requirements.txt")
+                                                file_path = "././azure-requirements.txt")
 
         # Create a script config
-        training_folder = '../models/'
+        training_folder = ''
         script_config = ScriptRunConfig(source_directory=training_folder,
-                                        script='train_model.py',
+                                        script='./src/models/train_model.py',
                                         environment=pytorch_env, 
                                         compute_target=cluster) 
 
@@ -40,10 +40,12 @@ def main():
         run.wait_for_completion()
 
         # Register the model
-        run.register_model(model_path='../models/model.pt', model_name='tumor_identification_model',
-                   tags={'Training context':'Script'},
-                #    properties={'AUC': run.get_metrics()['AUC'], 'Accuracy': run.get_metrics()['Accuracy']}
-                   )
+        #run.register_model(
+        #    model_path='././models/model.pt', 
+        #    model_name='tumor_identification_model',
+        #    tags={'Training context':'Script'},
+        #    properties={'AUC': run.get_metrics()['AUC'], 'Accuracy': run.get_metrics()['Accuracy']}
+        #    )
 
     else:
         raise ValueError('Please select a compute to run on.')

@@ -44,6 +44,9 @@ def train():
     trainer.fit(model, datamodule=data)
     
 
+    script_model = torch.jit.script(model)
+    script_model.save('../../models/deployable_model.pt')
+
 # def evaluate():
 #     print("Evaluating until hitting the ceiling")
 #     parser = argparse.ArgumentParser(description='Training arguments')

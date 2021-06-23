@@ -1,11 +1,8 @@
 import torch
 from torch import nn
-from sklearn.metrics import accuracy_score
-import pytorch_lightning as pl
-from pytorch_lightning.loggers import WandbLogger
-
 import torch.nn.functional as F
 from torchvision import models 
+import pytorch_lightning as pl
 
 
 class TumorClassifier(pl.LightningModule):

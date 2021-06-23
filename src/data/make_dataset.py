@@ -30,7 +30,9 @@ import cv2
 
 def findFileExtension(filename):
 
-    file_split = filename.split(".")
+    filename = str(filename)
+    
+    file_split = filename.split('.')
 
     extension = file_split[-1]
     filename = file_split[0]

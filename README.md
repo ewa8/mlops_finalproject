@@ -18,6 +18,8 @@ We plan to use the Kornia framework for the project. We will use the data augmen
 
 The data set used for the project is called [Brain MRI Images for Brain Tumor Detection](https://www.kaggle.com/navoneel/brain-mri-images-for-brain-tumor-detection?fbclid=IwAR1E8c2ZIR4g4ePLUku6PWjESgeHClsqTXmWqPZSA4ut2DLleNBH6GbiwYw) and is found on Kaggle.  It is a binary classification problem where we need to classify whether a braincontains a tumor or not.  It consists of 253 brain MRI scan images, where 98 of the brain scansbelongs to the class ”No” and the remaining 155 images belongs to the class ”Yes”.  The imagesvaries in size with some of the largest ones being 1024×1024 and 1920×1080 compared to thesmallest images being 201×251 and 300×168.
 
+To create the data structure, first run the command `make folder` to create the folder structure. Then manually download the dataset from Kaggle and put the `no` and `yes` folders into the `brain_tumor_dataset/raw` folder. Now run the `make data` command to get both intermediate and processed data.
+
 ## Models
 
 We are going to use a pre-trained network (transfer learning) as backbone for our convolutionalneural network.  This is to further increase efficiency of our training as data sample size is alreadysparse.  Furthermore, the pre-trained network will be chosen from the already supported modelsin pytorch, example:  ResNet.  Most of pytorch’s pre-trained models takes RGB images of a certainsize eg.  224×224 for ResNet, we therefore need to keep this in mind when choosing pre-trainedmodels.
